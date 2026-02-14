@@ -1,5 +1,5 @@
 import {initializeApp} from 'firebase/app'
-import {getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword} from 'firebase/auth'
+import {getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, EmailAuthProvider} from 'firebase/auth'
 import {getFirestore, doc, getDoc, setDoc} from 'firebase/firestore'
 
 // Your web app's Firebase configuration
@@ -15,6 +15,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const firbaseApp = initializeApp(firebaseConfig);
 const googleProvider =  new GoogleAuthProvider();
+const emailProvider = new EmailAuthProvider();
+
 googleProvider.setCustomParameters({
     prompt:"select_account"
 });
@@ -47,4 +49,8 @@ export const createUserDocumentFromAuth = async (userAuth) => {
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
         return await createUserWithEmailAndPassword(auth, email, password);
+}
+
+export const signInWithAuthEmailAndPassword = async (email, password) => {
+    return await signInWithEmailAndPassword(auth, email, password);
 }
