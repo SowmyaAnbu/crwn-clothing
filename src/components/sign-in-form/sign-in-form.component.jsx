@@ -4,6 +4,7 @@ import { auth, signInWithGooglePopup, signInWithGoogleRedirect, createUserDocume
 import Button from "../button/button.component";
 import './sign-in-form.styles.scss';
 
+
   const defaultFormFields = {
     email : '',
     password : '',
@@ -34,8 +35,7 @@ const handleSubmit = async (event) => {
   
 }
  const signInWithGoogle = async () => {
-        const {user} = await signInWithGooglePopup();
-        const userDocRef = await createUserDocumentFromAuth(user);
+      await signInWithGooglePopup();    
   }
     return (
        <div className = 'sign-up-container'>
