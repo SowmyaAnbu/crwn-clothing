@@ -37,7 +37,7 @@ const handleSubmit = async (event) => {
  const signInWithGoogle = async () => {
       await signInWithGooglePopup();    
   }
-    return (
+ return (
        <div className = 'sign-up-container'>
         <h2>I already have an account</h2>
         <span>Sign up with your email and password</span>
