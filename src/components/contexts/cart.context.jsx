@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import SHOP_DATA from '../../shop-data.json';
+import SHOP_DATA from '../../shop-data';
 
 export const CartContext = createContext({
     isCartOpen : false,

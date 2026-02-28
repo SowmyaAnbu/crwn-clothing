@@ -26,7 +26,7 @@ import './checkout.styles.scss';
                    </div>
             </div>
                 {cartItems.map(item => <CheckoutItem key= {item.id} cartItem={item}/>)}
-                <span className='total'>Total: {cartTotal}</span>
+                <span className='total'>Total: £{cartTotal}</span>
         </div>
     
     )
