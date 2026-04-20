@@ -3,6 +3,8 @@ import { useState, SubmitEvent, ChangeEvent } from "react";
 import { auth, signInWithGooglePopup, signInWithGoogleRedirect, createUserDocumentFromAuth, signInWithAuthEmailAndPassword } from "../../utils/firebase/firebase.utils";
 import Button, {BUTTON_TYPE_CLASSES} from "../button/button.component";
 import { AuthError, AuthErrorCodes } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { emailSignInStart, googleSignInStart } from "../../store/user/user-action";
 import { SignInContainer, ButtonsContainer } from "./sign-in-form.styles"
 
 
@@ -12,6 +14,7 @@ import { SignInContainer, ButtonsContainer } from "./sign-in-form.styles"
   }
 
 const SignInForm = () => {
+     const dispatch = useDispatch();
      const [formFields, setFormFields] = useState(defaultFormFields);
      const {email, password} = formFields;
 
@@ -20,11 +23,15 @@ const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
         setFormFields({...formFields, [name]:value});
 } 
+
+ const signInWithGoogle = async () => {
+     dispatch(googleSignInStart()); 
+ } 
+
 const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     try{
-        const user = await signInWithAuthEmailAndPassword(email, password);
-        console.log(user);
+        dispatch(emailSignInStart(email, password));
         setFormFields(defaultFormFields);
     } catch(error) {
         if((error as AuthError).code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS) {
@@ -35,9 +42,6 @@ const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     }
 }
 
- const signInWithGoogle = async () => {
-      await signInWithGooglePopup();    
-  }
  return (
        <SignInContainer>
         <h2>I already have an account</h2>

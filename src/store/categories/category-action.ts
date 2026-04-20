@@ -18,14 +18,3 @@ export const fetchCategoriesSuccess = withMatcher((categoriesArray: Category[]):
 
 export const fetchCategoriesFailed = withMatcher((error: Error): FetchCategoriesFailed => 
     createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED, error));
-
-export const fetchCategoriesAsync = () => async(dispatch: Dispatch) => {
-    dispatch(fetchCategoriesStart());
-    try{
-        const categoriesArray = await getCategoriesAndDocuments();
-        dispatch(fetchCategoriesSuccess(categoriesArray));
-    } catch(error) {
-        dispatch(fetchCategoriesFailed(error as Error));
-    }
- 
-}

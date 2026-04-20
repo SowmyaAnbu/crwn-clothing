@@ -1,24 +1,47 @@
 import { USER_ACTION_TYPES } from "./user-types";
-import { setCurrentUser } from "./user-action";
+import {  signInSuccess, signInFailed, signUpSuccess, signUpFailed, signOutFailed, signOutSuccess } from "./user-action";
 import {UnknownAction} from "redux";
 import { User } from "firebase/auth";
 
 export type UserState = {
-    currentUser: User | null
-  
+    currentUser: User | null;
+    isLoading: boolean;
+    error: Error | null;
 }
 
 const INITIAL_STATE: UserState = {
-    currentUser: null
+    currentUser: null,
+    isLoading: false,
+    error: null,
 }
 
 export const userReducer =  (state = INITIAL_STATE, action: UnknownAction): UserState => {
  
-    if(setCurrentUser.match(action)){
-          return {
-                ...state,
-                currentUser: action.payload
-            }
+  
+     if (signInSuccess.match(action)) {
+        return {
+            ...state,
+            currentUser: action.payload,
+            isLoading: false,
+            error: null
+        }
     }
-    return state;
+      if (signOutSuccess.match(action)) {
+        return {
+            ...state,
+            currentUser: null,
+            isLoading: false,
+            error: null
+        }
+    }
+    if (signInFailed.match(action) || signUpFailed.match(action) || signOutFailed.match(action)) {
+        return {
+            ...state,
+            currentUser: null,
+            isLoading: false,
+            error: action.payload
+        }
+    }
+   
+      return state;
 }

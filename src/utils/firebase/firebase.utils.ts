@@ -55,7 +55,7 @@ export const getCategoriesAndDocuments = async (): Promise<Category[]> => {
     return querySnapShot.docs.map(docSnapshot => docSnapshot.data() as Category);
 }
 
-type AdditionalInformation = {
+export type AdditionalInformation = {
     displayName?: string;
 }
 
@@ -93,3 +93,16 @@ export const signInWithAuthEmailAndPassword = async (email:string, password:stri
 export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = (callback:NextOrObserver<User>) => onAuthStateChanged(auth, callback);
+
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+        const unsubscribe = onAuthStateChanged(
+            auth,
+            (userAuth) => {
+                unsubscribe();
+                resolve(userAuth);
+            },
+            reject
+        );
+    });
+};
