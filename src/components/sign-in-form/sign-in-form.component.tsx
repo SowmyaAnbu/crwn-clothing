@@ -1,9 +1,9 @@
 import FormInput from "../form-input/form-input.component";
 import { useState, SubmitEvent, ChangeEvent } from "react";
-import { auth, signInWithGooglePopup, signInWithGoogleRedirect, createUserDocumentFromAuth, signInWithAuthEmailAndPassword } from "../../utils/firebase/firebase.utils";
 import Button, {BUTTON_TYPE_CLASSES} from "../button/button.component";
 import { AuthError, AuthErrorCodes } from "firebase/auth";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { emailSignInStart, googleSignInStart } from "../../store/user/user-action";
 import { SignInContainer, ButtonsContainer } from "./sign-in-form.styles"
 
@@ -15,8 +15,10 @@ import { SignInContainer, ButtonsContainer } from "./sign-in-form.styles"
 
 const SignInForm = () => {
      const dispatch = useDispatch();
+     const navigate = useNavigate();
      const [formFields, setFormFields] = useState(defaultFormFields);
      const {email, password} = formFields;
+     
 
    
 const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
